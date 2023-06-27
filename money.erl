@@ -10,12 +10,12 @@
 -import(maps, [remove/2]).  
 -import(maps, [put/3]).
 
--export([start/1]).
+-export([start/1]). %export start function of money.erl file, so that other files can access this function.
 
 
 start(Args) ->
-	CustomerFile = lists:nth(1, Args),
-	BankFile = lists:nth(2, Args),
+	CustomerFile = lists:nth(1, Args), %read customer file name.
+	BankFile = lists:nth(2, Args), %read Bank file name.
 	register(money, self()),
 
 	io:fwrite("** The financial market is opening for the day **~n ~n"),
@@ -23,16 +23,16 @@ start(Args) ->
 	io:fwrite(Log_msg),
 
 	%Banks Processing
-	{ok,BankInfo} = file:consult(BankFile),
-	Banks_mapX = maps:from_list(BankInfo),
+	{ok,BankInfo} = file:consult(BankFile), %read bankfile as a list.
+	Banks_mapX = maps:from_list(BankInfo), %convert list into a map.
 	Banks_map_keys = maps:keys(Banks_mapX),
 	Banks_length = length(Banks_map_keys),
 
 	customer_bank_action(Banks_length,Banks_map_keys, Banks_mapX,false,Banks_map_keys),
 
 	%Customer Processing
-	{ok,CustomerInfo} = file:consult(CustomerFile),
-	Customer_mapX = maps:from_list(CustomerInfo),
+	{ok,CustomerInfo} = file:consult(CustomerFile),	%read customer file as a list.
+	Customer_mapX = maps:from_list(CustomerInfo),	%convert list into a map.
 	Customer_map_keys = maps:keys(Customer_mapX),
 	Customer_length = length(Customer_map_keys),
 	Final_banks_rpt=[],
@@ -40,7 +40,7 @@ start(Args) ->
 	Total_bank_amount=calculate_total_loaned(BankInfo), %this will store total bank balance of all banks.
 		
 	customer_bank_action(Customer_length, Customer_map_keys,Customer_mapX,true,Banks_map_keys),
-	Meta_data=[CustomerFile,BankFile,Total_bank_amount], 
+	Meta_data=[CustomerFile,BankFile,Total_bank_amount],  %this list has all meta data to pass through actual function.
 	master_receiver(Banks_map_keys,Customer_length, Customer_mapX,Customer_mapX,Banks_length,Final_banks_rpt,Meta_data).
 
 
@@ -77,27 +77,6 @@ bank_balance(Length,Bank_keys) when Length > 0 ->
 	whereis(Bank_name) ! {req_balance, Bank_name},
 	bank_balance(Length-1,Bank_keys).
 	
-
-	
-%This function will Customers report.
-generateCustomerReport(TupleList,Meta_data) ->
-
-	Total_remaining=calculate_total_loaned(TupleList),
-	Total_original_amount=lists:nth(3,Meta_data),
-	Total_loaned=Total_original_amount-Total_remaining,
-
-	BankFileX = lists:nth(2, Meta_data),
-	{ok,BankInfoX} = file:consult(BankFileX),
-	Bank_map = maps:from_list(BankInfoX),
-
-	io:format("~nBanks:~n"),
-	lists:foreach(fun({Bank_name, Rem_balance}) ->
-		Org_balance = maps:get(Bank_name, Bank_map),
-		io:format("	~p: original ~p, Balance ~p~n", [Bank_name,Org_balance,Rem_balance])
-  end, TupleList),
-
-  	io:format("	----~n"),
-    io:format("	Total: original ~p, loaned ~p~n",[Total_original_amount, Total_loaned]).	
 
 
 customer_action(_,0,_,_,_) ->			%Base case to stop recursion
@@ -220,7 +199,7 @@ master_receiver(M2keys,Customer_length,Mwohoo,Mbohoo,Banks_length,Final_banks_rp
 		
 
 
-%Supporting Functions.
+%Supporting Function.
 calculate_total_loaned(List) ->
 		lists:foldl(fun({_, Amount}, Acc) -> Amount + Acc end, 0, List).
 	

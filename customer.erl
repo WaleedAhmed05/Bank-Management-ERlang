@@ -20,12 +20,7 @@ customerApp(Name, Amount, Bank_keys) ->
 	customer_actionX(Length,Name,Amount,Amount,Amount,Bank_keys),
 	customer_receiver(Name).
 
-
-% print_customer_map(CustomerMap) ->
-% 		lists:foreach(fun({Customer, Amount}) ->
-% 			io:format("Customer: ~p, Amount: ~p~n", [Customer, Amount])
-% 		end, maps:to_list(CustomerMap)).
-
+%Customer receiver
 customer_receiver(Name) ->
 
 				receive

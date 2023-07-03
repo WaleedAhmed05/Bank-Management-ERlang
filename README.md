@@ -8,7 +8,7 @@ Each customer can request a loan of maximum $50 to any random Bank. A bank can a
 
 ### Requirements or Prerequisites
 Download [Erlang/OTP](https://www.erlang.org/downloads). <br>
-Download and install any editor [Notepad++](https://notepad-plus-plus.org/downloads/) or [Visual_Studio_Code] (https://code.visualstudio.com/) <br>
+Download and install any editor [Notepad++](https://notepad-plus-plus.org/downloads/) or [Visual_Studio_Code](https://code.visualstudio.com/) <br>
 Set ERlang Path variable. <br>
 
 ### Input files.

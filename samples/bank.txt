@@ -1,0 +1,10 @@
+{Toronto-Dominion Bank,8000}.
+{rbc,80}.
+{Bank of Nova Scotia, 980}.
+{CIBC, 49}.
+{Disjardins, 99}.
+{National Bank, 5000}.
+{bmo,700}.
+{HSBC, 50}.
+{Canadian Western, 190}.
+{ing,200}.
